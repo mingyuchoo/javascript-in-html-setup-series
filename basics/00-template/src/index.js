@@ -1,6 +1,3 @@
-function sum() {
-  return 1 + 2;
- }
-
-
-export default sum;
+const hello = (name) => {
+  document.getElementById("output").innerHTML = "Hello, " + name;
+}
