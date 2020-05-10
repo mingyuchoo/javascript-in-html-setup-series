@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint --config .eslintrc.yml --fix .",
-    "test": "jest --config ./jest.config.json",
+    "test": "jest --config=jest.config.json",
     "build": "rm -rf public/javascripts/* && babel src --out-dir public/javascripts",
     "develop": "nodemon --exec babel-node src/index.js"
   },
