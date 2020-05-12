@@ -6,12 +6,15 @@
   "scripts": {
     "lint": "eslint --config .eslintrc.yml --fix .",
     "test": "jest --config=jest.config.json",
+    "sass": "node-sass --watch src/scss -o public/stylesheets",
     "build": "rm -rf public/javascripts/* && babel src --out-dir public/javascripts",
-    "develop": "nodemon --exec babel-node src/index.js"
+    "develop": "nodemon --exec babel-node src/index.js",
+    "live": "live-server --open=public"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.6",
+    "@babel/node": "^7.8.7",
     "@babel/preset-env": "^7.9.6",
     "babel-jest": "^26.0.1",
     "babel-loader": "^8.1.0",
@@ -19,6 +22,9 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.3",
     "jest": "^26.0.1",
+    "live-server": "^1.2.1",
+    "node-sass": "^4.14.1",
+    "nodemon": "^2.0.3",
     "prettier": "^2.0.5"
   }
 }
