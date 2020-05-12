@@ -6,9 +6,9 @@
   "scripts": {
     "lint": "eslint --config .eslintrc.yml --fix .",
     "test": "jest --config=jest.config.json",
-    "sass": "node-sass --watch src/scss -o public/stylesheets",
     "build": "rm -rf public/javascripts/* && babel src --out-dir public/javascripts",
-    "develop": "nodemon --exec babel-node src/index.js",
+    "sass": "node-sass --watch src/scss -o public/stylesheets",
+    "babel": "nodemon --exec babel-node src/index.js",
     "live": "live-server --open=public"
   },
   "devDependencies": {
