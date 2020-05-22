@@ -9,4 +9,8 @@ const hello = (name) => {
 const msg = () => {
   alert('Hello, JavaScript');
 };
-//export default sum;
+
+function isValidPwdRegex(pwd) {
+  var regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[-~!@$%^&*=_+,.;':"\[\]{}\\]).{8,20}$/;
+  return regex.test(pwd);
+}
