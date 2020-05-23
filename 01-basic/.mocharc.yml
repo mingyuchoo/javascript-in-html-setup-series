@@ -1,3 +1,4 @@
+# This is an example Mocha config containing every Mocha option plus others
 allow-uncaught: false
 async-only: false
 bail: false
@@ -5,12 +6,15 @@ check-leaks: false
 color: true
 delay: false
 diff: true
-exit: false
+exit: false # could be expressed as "no-exit: true"
 extension:
   - js
 forbid-only: false
 forbid-pending: false
 full-trace: false
+global:
+  - jQuery
+  - $
 growl: false
 inline-diffs: false
 recursive: false
@@ -18,7 +22,10 @@ reporter: spec
 retries: 1
 slow: 75
 sort: false
-spec: src/**/*.mocha.spec.js
+spec: src/js/**/*.spec.mocha.js
 timeout: false
 trace-warnings: true
 ui: bdd
+watch: true
+watch-files:
+ - src/js/**/*.js
