@@ -1,11 +1,32 @@
 body {
-  background-color: lightblue;
-}
+  background-color: lightskyblue;
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+
 h1 {
-  color: white;
-  text-align: center;
-}
-p {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 1em;
-}
+  color: blueviolet;
+  text-align: left; }
+
+/* unvisited link */
+a:link {
+  color: black;
+  text-decoration: none;
+  background-color: yellow; }
+
+/* visited link */
+a:visited {
+  color: black;
+  text-decoration: none;
+  background-color: cyan; }
+
+/* mouse over link */
+a:hover {
+  color: blueviolet;
+  text-decoration: underline;
+  background-color: lightgreen; }
+
+/* selected link */
+a:active {
+  color: blueviolet;
+  text-decoration: underline;
+  background-color: hotpink; }

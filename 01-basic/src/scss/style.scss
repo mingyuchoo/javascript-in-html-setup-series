@@ -1,9 +1,37 @@
 body {
+  background-color: lightskyblue;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
-a {
-  color: #00B700;
+h1 {
+  color: blueviolet;
+  text-align: left;
 }
 
+/* unvisited link */
+a:link {
+  color: black;
+  text-decoration: none;
+  background-color: yellow;
+}
+
+/* visited link */
+a:visited {
+  color: black;
+  text-decoration: none;
+  background-color: cyan;
+}
+
+/* mouse over link */
+a:hover {
+  color: blueviolet;
+  text-decoration: underline;
+  background-color: lightgreen;
+}
+
+/* selected link */
+a:active {
+  color: blueviolet;
+  text-decoration: underline;
+  background-color: hotpink;
+}
