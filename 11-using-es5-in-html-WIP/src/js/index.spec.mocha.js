@@ -1,7 +1,8 @@
-import { should } from 'chai';
-should();
+// CommonJS (Pre-Native) Module 형태
 
-import { sum } from './index';
+require('chai/register-should');
+
+const { sum } = require('./index');
 
 describe('Given a = 1, b = 2', () => {
   it('When call sum(a, b)', () => {
