@@ -10,34 +10,35 @@ const plumber = require('gulp-plumber');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const replace = require('gulp-replace');
+const merge = require('merge-stream');
 const browsersync = require('browser-sync').create();
 const reload = browsersync.reload;
 
 // BrowserSync
-function browserSync(done) {
+function browserSync(cb) {
   browsersync.init({
     server: {
       baseDir: 'public',
     },
     port: 3000,
   });
-  done();
+  cb();
 }
 
 // BrowserSync Reload
-function browserSyncReload(done) {
+function browserSyncReload(cb) {
   browsersync.reload();
-  done();
+  cb();
 }
 
 // Clean pbulic directory
 function cleanPublic() {
-  return src('public/js/*')
-    .pipe(clean({ force: true }))
-    .pipe(src('public/css/*'))
-    .pipe(clean({ force: true }))
-    .pipe(src(['public/index.html', 'public/html/*'], { allowEmpty: true }))
-    .pipe(clean({ force: true }));
+  const js = src('public/js/*').pipe(clean({ force: true }));
+  const css = src('public/css/*').pipe(clean({ force: true }));
+  const html = src(['public/index.html', 'public/html/*'], {
+    allowEmpty: true,
+  }).pipe(clean({ force: true }));
+  return merge(js, css, html);
 }
 
 // Transpile SCSS to CSS
@@ -54,21 +55,19 @@ function isFixed(file) {
 }
 
 function lintJavaScript() {
-  return src('src/js/**/*.js')
+  const js = src('src/js/**/*.js')
     .pipe(plumber())
     .pipe(eslint({ configFile: '.eslintrc.yml', fix: true }))
     .pipe(eslint.format())
     .pipe(gulpIf(isFixed, dest('src/js')))
     .pipe(eslint.failAfterError());
-}
-
-function lintGulpfile() {
-  return src('gulpfile.js')
+  const gulpfile = src('gulpfile.js')
     .pipe(plumber())
     .pipe(eslint({ configFile: '.eslintrc.yml', fix: true }))
     .pipe(eslint.format())
     .pipe(gulpIf(isFixed, dest('./')))
     .pipe(eslint.failAfterError());
+  return merge(js, gulpfile);
 }
 
 // Urglify JavaScript
@@ -83,11 +82,9 @@ function uglifyJavaScript() {
 
 // Copy HTML
 function copyHTML() {
-  return src('src/index.html')
-    .pipe(dest('public'))
-    .pipe(src('src/html/**/*.html'))
-    .pipe(dest('public/html'))
-    .pipe(browsersync.stream({ stream: true }));
+  const root = src('src/index.html').pipe(dest('public'));
+  const children = src('src/html/**/*.html').pipe(dest('public/html'));
+  return merge(root, children).pipe(browsersync.stream({ stream: true }));
 }
 
 // Watch files changed
@@ -100,15 +97,11 @@ function watchFiles() {
 
 exports.clean = cleanPublic;
 
-exports.lint = parallel(lintJavaScript, lintGulpfile);
+exports.lint = lintJavaScript;
 
 exports.watch = parallel(watchFiles, browserSync);
 
 exports.default = series(
   cleanPublic,
-  parallel(
-    transpileSCSS,
-    series(parallel(lintJavaScript, lintGulpfile), uglifyJavaScript),
-    copyHTML
-  )
+  parallel(transpileSCSS, series(lintJavaScript, uglifyJavaScript), copyHTML)
 );
