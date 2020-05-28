@@ -7,8 +7,8 @@ function sum(a, b) {
 }
 
 /* msg */
-function msg(event) {
-  alert('Good morning, JavaScript!');
+function greeting(event) {
+  alert('Hello, JavaScript!');
 }
 
 /* isValidPwdRegex */
@@ -18,5 +18,5 @@ function isValidPwdRegex(pwd) {
 }
 
 module.exports.sum = sum;
-module.exports.msg = msg;
+module.exports.greeting = greeting;
 module.exports.isValidPwdRegex = isValidPwdRegex;

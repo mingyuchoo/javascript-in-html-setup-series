@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint --config .eslintrc.yml --fix .",
-    "test:jest": "jest --config=jest.config.json",
+    "test:jest": "jest --config=jest.config.json --watchAll",
     "test:mocha": "nyc --reporter=html --reporter=text mocha --config=.mocharc.yml"
   },
   "devDependencies": {
@@ -20,6 +20,7 @@
     "gulp-if": "^3.0.0",
     "gulp-plumber": "^1.2.1",
     "gulp-rename": "^2.0.0",
+    "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.1.0",
     "gulp-uglify": "^3.0.2",
     "jest": "^26.0.1",

@@ -9,6 +9,7 @@ const gulpIf = require('gulp-if');
 const plumber = require('gulp-plumber');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
+const replace = require('gulp-replace');
 const browsersync = require('browser-sync').create();
 const reload = browsersync.reload;
 
@@ -73,6 +74,7 @@ function lintGulpfile() {
 // Urglify JavaScript
 function uglifyJavaScript() {
   return src('src/js/index.js')
+    .pipe(replace('module.exports', '//module.exports'))
     .pipe(uglify())
     .pipe(rename({ extname: '.min.js' }))
     .pipe(dest('public/js'))

@@ -8,4 +8,5 @@ test('adds 1 + 2 to equal 3', () => {
 
 test('isValidPwdRegex', () => {
   expect(true).toBe(true);
+  expect(false).toBe(false);
 });
