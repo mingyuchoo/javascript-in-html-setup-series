@@ -5,6 +5,7 @@ const { series, parallel, src, dest, watch } = require('gulp');
 const clean = require('gulp-clean');
 const sass = require('gulp-sass');
 const eslint = require('gulp-eslint');
+const gulpIf = require('gulp-if');
 const plumber = require('gulp-plumber');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
@@ -28,43 +29,84 @@ function browserSyncReload(done) {
   done();
 }
 
+// Clean pbulic directory
 function cleanPublic() {
   return src('public/js/*')
     .pipe(clean({ force: true }))
     .pipe(src('public/css/*'))
+    .pipe(clean({ force: true }))
+    .pipe(src(['public/index.html', 'public/html/*'], { allowEmpty: true }))
     .pipe(clean({ force: true }));
 }
 
+// Transpile SCSS to CSS
 function transpileSCSS() {
-  return src('src/scss/**/*.scss', { sourcemaps: true })
+  return src('src/scss/**/*.scss')
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
-    .pipe(dest('public/css', { sourcemaps: true }))
-    .pipe(browsersync.stream());
+    .pipe(dest('public/css'))
+    .pipe(browsersync.stream({ stream: true }));
 }
 
-// Lint scripts
+// check some file is fiexed
+function isFixed(file) {
+  return file.eslint !== null && file.eslint.fixed;
+}
+
 function lintJavaScript() {
-  return src(['src/js/**/*.js', 'gulpfile.js'])
+  return src('src/js/**/*.js')
     .pipe(plumber())
-    .pipe(eslint())
+    .pipe(eslint({ configFile: '.eslintrc.yml', fix: true }))
     .pipe(eslint.format())
+    .pipe(gulpIf(isFixed, dest('src/js')))
     .pipe(eslint.failAfterError());
 }
 
-function uglifyJavaScript() {
-  return src('src/js/index.js', { sourcemaps: true })
-    .pipe(uglify())
-    .pipe(rename({ extname: '.min.js' }))
-    .pipe(dest('public/js', { sourcemaps: true }));
+function lintGulpfile() {
+  return src('gulpfile.js')
+    .pipe(plumber())
+    .pipe(eslint({ configFile: '.eslintrc.yml', fix: true }))
+    .pipe(eslint.format())
+    .pipe(gulpIf(isFixed, dest('./')))
+    .pipe(eslint.failAfterError());
 }
 
+// Urglify JavaScript
+function uglifyJavaScript() {
+  return src('src/js/index.js')
+    .pipe(uglify())
+    .pipe(rename({ extname: '.min.js' }))
+    .pipe(dest('public/js'))
+    .pipe(browsersync.stream({ stream: true }));
+}
+
+// Copy HTML
+function copyHTML() {
+  return src('src/index.html')
+    .pipe(dest('public'))
+    .pipe(src('src/html/**/*.html'))
+    .pipe(dest('public/html'))
+    .pipe(browsersync.stream({ stream: true }));
+}
+
+// Watch files changed
 function watchFiles() {
   watch('src/scss/**/*.scss', transpileSCSS);
   watch('src/js/**/*.js', series(lintJavaScript, uglifyJavaScript));
-  watch(['public/index.html', 'public/html/**/*'], browserSyncReload);
+  watch(['src/index.html', 'src/html/**/*.html'], copyHTML);
+  //watch(['src/index.html', 'src/html/**/*.html'], browserSyncReload);
 }
+
+exports.clean = cleanPublic;
+
+exports.lint = parallel(lintJavaScript, lintGulpfile);
+
 exports.watch = parallel(watchFiles, browserSync);
+
 exports.default = series(
   cleanPublic,
-  parallel(transpileSCSS, series(lintJavaScript, uglifyJavaScript))
+  parallel(
+    transpileSCSS,
+    series(parallel(lintJavaScript, lintGulpfile), uglifyJavaScript),
+    copyHTML
+  )
 );

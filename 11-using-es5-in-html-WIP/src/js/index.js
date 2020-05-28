@@ -6,13 +6,9 @@ function sum(a, b) {
   return a + b;
 }
 
-function hello() {
-  return 'hello';
-}
-
 /* msg */
 function msg(event) {
-  alert('Hello, JavaScript!');
+  alert('Good morning, JavaScript!');
 }
 
 /* isValidPwdRegex */
@@ -21,6 +17,6 @@ function isValidPwdRegex(pwd) {
   return regex.test(pwd);
 }
 
-//module.exports.sum = sum;
-//module.exports.msg = msg;
-//module.exports.isValidPwdRegex = isValidPwdRegex;
+module.exports.sum = sum;
+module.exports.msg = msg;
+module.exports.isValidPwdRegex = isValidPwdRegex;
