@@ -92,16 +92,18 @@ const lintJavaScript = () => {
 
 // transpile ES6 to ES5
 export const transpileES6 = () => {
-  return src('src/js/index.js')
-    .pipe(sourcemaps.init())
-    .pipe(babel({ presets: ['@babel/preset-env'] }))
-    .pipe(cache.cache())
-    .pipe(concat('bundle.js'))
-    .pipe(uglify())
-    .pipe(rename({ extname: '.min.js' }))
-    .pipe(sourcemaps.write('.'))
-    .pipe(dest('public/js'))
-    .pipe(browsersync.stream({ stream: true }));
+  return (
+    src('src/js/index.js')
+      .pipe(sourcemaps.init())
+      .pipe(babel({ presets: ['@babel/preset-env'] }))
+      .pipe(cache.cache())
+      .pipe(concat('bundle.js'))
+      // .pipe(uglify())
+      .pipe(rename({ extname: '.min.js' }))
+      .pipe(sourcemaps.write('.'))
+      .pipe(dest('public/js'))
+      .pipe(browsersync.stream({ stream: true }))
+  );
 };
 
 // Copy HTML
