@@ -6,7 +6,8 @@ export default {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'public/js'),
-    publicPath: '/public/js',
+    libraryTarget: 'var',
+    library: 'EntryPoint',
   },
   module: {
     rules: [
