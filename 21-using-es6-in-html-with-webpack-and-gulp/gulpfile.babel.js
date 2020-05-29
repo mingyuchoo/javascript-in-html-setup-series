@@ -4,18 +4,10 @@ import sass from 'gulp-sass';
 import eslint from 'gulp-eslint';
 import gulpIf from 'gulp-if';
 import plumber from 'gulp-plumber';
-import uglify from 'gulp-uglify';
-import rename from 'gulp-rename';
-import replace from 'gulp-rename';
-import sourcemaps from 'gulp-sourcemaps';
-import concat from 'gulp-concat';
 import { create, reload } from 'browser-sync';
-import babel from 'gulp-babel';
-import Cache from 'gulp-file-cache';
 import merge from 'merge-stream';
 
 const browsersync = create();
-const cache = new Cache();
 
 const paths = {
   scss: {
@@ -29,33 +21,26 @@ const paths = {
 };
 
 // syncBrowser
-const syncBrowser = (cb) => {
+const syncBrowser = (callback) => {
   browsersync.init({
     server: {
       baseDir: 'public',
     },
     port: 3000,
   });
-  cb();
-};
-
-// syncBrowser Reload
-const syncBrowserReload = (cb) => {
-  reload();
-  cb();
+  callback();
 };
 
 // Clean public directory
-const cleanPublic = () => {
-  const js = src('public/js/*').pipe(clean({ force: true }));
-
+export const cleanAll = () => {
+  // const js = src('public/js/*').pipe(clean({ force: true }));
   const css = src('public/css/*').pipe(clean({ force: true }));
-
   const html = src(['public/index.html', 'public/html/*'], {
     allowEmpty: true,
   }).pipe(clean({ force: true }));
 
-  return merge(js, css, html);
+  // return merge(js, css, html);
+  return merge(css, html);
 };
 
 // Transpile SCSS to CSS
@@ -72,7 +57,7 @@ const isFixed = (file) => {
 };
 
 // lint JavaScript
-const lintJavaScript = () => {
+export const lintAll = () => {
   const js = src('src/js/**/*.js')
     .pipe(plumber())
     .pipe(eslint({ configFile: '.eslintrc.yml', fix: true }))
@@ -90,26 +75,9 @@ const lintJavaScript = () => {
   return merge(js, gulpfile);
 };
 
-// transpile ES6 to ES5
-export const transpileES6 = () => {
-  return (
-    src('src/js/index.js')
-      .pipe(sourcemaps.init())
-      .pipe(babel({ presets: ['@babel/preset-env'] }))
-      .pipe(cache.cache())
-      .pipe(concat('bundle.js'))
-      // .pipe(uglify())
-      .pipe(rename({ extname: '.min.js' }))
-      .pipe(sourcemaps.write('.'))
-      .pipe(dest('public/js'))
-      .pipe(browsersync.stream({ stream: true }))
-  );
-};
-
 // Copy HTML
-export const copyHTML = () => {
+export const copyHtml = () => {
   const root = src('src/index.html').pipe(dest('public'));
-
   const children = src('src/html/**/*.html').pipe(dest('public/html'));
 
   return merge(root, children).pipe(browsersync.stream({ stream: true }));
@@ -117,16 +85,10 @@ export const copyHTML = () => {
 
 const watchFiles = () => {
   watch('src/scss/**/*.scss', transpileSCSS);
-  watch('src/**/*.js', series(lintJavaScript, transpileES6));
-  watch(['src/index.html', 'src/html/**/*.html'], copyHTML);
+  watch(['src/index.html', 'src/html/**/*.html'], copyHtml);
 };
 
-export const cleanAll = cleanPublic;
-export const lintAll = lintJavaScript;
 export const watchAll = parallel(watchFiles, syncBrowser);
-const build = series(
-  cleanPublic,
-  parallel(transpileSCSS, series(lintJavaScript, transpileES6), copyHTML)
-);
+const build = series(cleanAll, parallel(transpileSCSS, lintAll, copyHtml));
 
 export default build;

@@ -1,6 +1,6 @@
-const path = require('path');
+import path from 'path';
 
-module.exports = {
+export default {
   mode: 'development',
   entry: './src/js/index.js',
   output: {
@@ -23,4 +23,5 @@ module.exports = {
       },
     ],
   },
+  devtool: 'source-map',
 };
