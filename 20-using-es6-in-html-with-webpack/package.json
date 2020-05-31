@@ -15,7 +15,6 @@
     "modules:unzip": "tar -zxvf node_modules.tar.gz"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.1",
     "@babel/preset-env": "^7.10.1",
     "@babel/register": "^7.10.1",
