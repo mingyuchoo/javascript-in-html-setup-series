@@ -2,10 +2,12 @@ import path from 'path';
 
 export default {
   mode: 'development',
-  entry: './src/js/index.js',
+  devtool: 'source-map',
+  entry: ['@babel/polyfill', './src/js/index.js'],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'public/js'),
+    publicPath: '/public/js',
     libraryTarget: 'var',
     library: 'EntryPoint',
   },
@@ -24,5 +26,9 @@ export default {
       },
     ],
   },
-  devtool: 'source-map',
+  plugins: [],
+  optimization: {},
+  resolve: {
+    modules: ['node_modules'],
+  },
 };
