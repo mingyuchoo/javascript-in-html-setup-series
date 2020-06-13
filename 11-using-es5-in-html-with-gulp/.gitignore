@@ -38,6 +38,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+package-lock.json
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
@@ -65,7 +66,7 @@ typings/
 
 # Yarn Integrity file
 .yarn-integrity
-
+yarn.lock
 
 # dotenv environment variables file
 .env
