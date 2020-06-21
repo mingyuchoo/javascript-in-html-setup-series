@@ -5,10 +5,17 @@ export const sum = (a, b) => {
 
 /* greeting */
 export const greeting = () => {
-  alert('Hello, Parcel!');
+  const state = 'Hello, Parcel!';
+  return state;
 };
 
 /* square */
 export const square = (x) => {
   return x * x;
+};
+
+/* array */
+export const makeArray = () => {
+  let fruits = ['Apple', 'Banana'];
+  return fruits.length;
 };

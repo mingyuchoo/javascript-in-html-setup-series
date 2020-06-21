@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "gulp cleanAll",
     "lint": "eslint --config .eslintrc.yml --fix ./src",
-    "test:jest": "jest --config=jest.config.json --watchAll",
+    "test:jest": "jest --config=jest.config.json --watchAll=false",
     "test:mocha": "nyc --reporter=html --reporter=text mocha --config=.mocharc.yml --require @babel/register",
     "gulp": "gulp && gulp watchAll",
     "webpack": "webpack --watch",

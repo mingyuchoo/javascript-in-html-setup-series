@@ -26,6 +26,6 @@ spec: src/js/**/*.spec.mocha.js
 timeout: false
 trace-warnings: true
 ui: bdd
-watch: true
+watch: false
 watch-files:
  - src/js/**/*.js

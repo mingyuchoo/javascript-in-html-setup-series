@@ -8,11 +8,30 @@ export const sum = (a, b) => {
 
 /* msg */
 export const msg = (event) => {
-  alert('Hello, JavaScript!');
+  const state ='Hello, JavaScript!';
+  alert(state);
+  return state;
 };
 
 /* isValidPwdRegex */
 export const isValidPwdRegex = (pwd) => {
   var regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[-~!@$%^&*=_+,.;':"\[\]{}\\]).{8,20}$/;
   return regex.test(pwd);
+};
+
+/* greeting */
+export const greeting = () => {
+  const state = 'Hello, Parcel!';
+  return state;
+};
+
+/* square */
+export const square = (x) => {
+  return x * x;
+};
+
+/* array */
+export const makeArray = () => {
+  let fruits = ['Apple', 'Banana'];
+  return fruits.length;
 };

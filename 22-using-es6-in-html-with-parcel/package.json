@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf public",
     "lint": "eslint --config .eslintrc.yml --fix ./src",
-    "test:jest": "jest --config=jest.config.json --watchAll",
+    "test:jest": "jest --config=jest.config.json --watchAll=false",
     "test:mocha": "nyc --reporter=html --reporter=text mocha --config=.mocharc.yml --require @babel/register",
     "parcel:watch": "rimraf public && parcel src/index.html --out-dir public --open",
     "parcel:build": "rimraf public && parcel build src/index.html --out-dir public",
@@ -19,9 +19,15 @@
   "devDependencies": {
     "@babel/core": "^7.10.2",
     "@babel/preset-env": "^7.10.2",
+    "@babel/register": "^7.10.3",
+    "chai": "^4.2.0",
     "eslint": "^7.2.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.3",
+    "jest": "^26.0.1",
+    "jquery": "^3.5.1",
+    "mocha": "^8.0.1",
+    "nyc": "^15.1.0",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-custom-dist-structure": "^1.1.13",
     "prettier": "^2.0.5",
@@ -40,8 +46,5 @@
     "options": {
       "development": true
     }
-  },
-  "dependencies": {
-    "jquery": "^3.5.1"
   }
 }

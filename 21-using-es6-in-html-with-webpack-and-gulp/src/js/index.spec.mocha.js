@@ -4,11 +4,31 @@
 import { should } from 'chai';
 should();
 
-import { sum } from './index';
+import * as index from './index';
 
-describe('Given a = 1, b = 2', () => {
-  it('When call sum(a, b)', () => {
-    const result = sum(1, 2);
+describe('index.js', () => {
+  it('sum()', () => {
+    const result = index.sum(1, 2);
     result.should.equals(3);
+  });
+
+  it('msg()', () => {
+    index.msg().should.equal('Hello, JavaScript!');
+  });
+
+  it('isValidPwdRegex()', () => {
+    index.isValidPwdRegex('qwe123!!').should.equal(true);
+  });
+
+  it('greeting()', () => {
+    index.greeting().should.equal('Hello, Parcel!');
+  });
+
+  it('square()', () => {
+    index.square(3).should.equal(9);
+  });
+
+  it('makeArray()', () => {
+    index.makeArray().should.equal(2);
   });
 });
