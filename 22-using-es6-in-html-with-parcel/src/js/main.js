@@ -14,7 +14,7 @@ export const square = (x) => {
   return x * x;
 };
 
-/* array */
+/* array example */
 export const makeArray = () => {
   let fruits = ['Apple', 'Banana'];
   return fruits.length;
