@@ -2,7 +2,7 @@
   "name": "01-using-es5-in-html",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "license": "BSD 3-Clause",
   "scripts": {
     "lint": "eslint --config .eslintrc.yml --fix .",
     "live": "live-server --open=public"

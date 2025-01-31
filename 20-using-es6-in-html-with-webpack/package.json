@@ -2,7 +2,7 @@
   "name": "00-template",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "license": "BSD 3-Clause",
   "scripts": {
     "lint": "eslint --config .eslintrc.yml --fix ./src",
     "test:jest": "jest --config=jest.config.json",

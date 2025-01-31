@@ -9521,7 +9521,7 @@ module.exports = __webpack_require__(/*! ../modules/_core */ "./node_modules/cor
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
- * This source code is licensed under the MIT license found in the
+ * This source code is licensed under the BSD 3-Clause license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
